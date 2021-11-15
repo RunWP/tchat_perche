@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <link rel="stylesheet" href="/style.css">
+    </head>
+
+    <body>
+
+        <div class="DivlogIn1">  
+            <div class="DivlogIn2">
+
+                <form method="POST" action="/checksignin">
+
+                    <input type="text" placeholder="eMail" name="email" required></input> <br><br>
+                    <input type="text" placeholder="Username" name="username" required></input> <br><br>
+                    <input type="password" placeholder="Password" name="password" required></input> <br><br>
+                    <input type="password" placeholder="Confirm password" name="pswdcheck" required></input> <br> <br><br>
+                    
+                    <input type="submit" class="button" value="SIGN UP"> <br><br>
+                    
+                </form>
+
+                <h4 id="ackText"></h4>
+
+                <a href="/">Login page</a>
+
+            </div>
+        </div>  
+
+        <script>
+
+            if(window.location.pathname === "/signin/success") {
+                document.getElementById("ackText").innerText = "SignIn success";
+                document.getElementById("ackText").style.color = "green";
+
+            } else if(window.location.pathname === "/signin/alreadyExists") {
+                document.getElementById("ackText").innerText = "Username already exists";
+                document.getElementById("ackText").style.color = "red";
+
+            } else if(window.location.pathname === "/signin/notMatch") {
+                document.getElementById("ackText").innerText = "Passwords doesn't match";
+                document.getElementById("ackText").style.color = "red";
+
+            }
+
+        </script>
+
+    </body>
+
+</html>

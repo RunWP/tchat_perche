@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>First Socket</title>
+        <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body { font: 13px Helvetica, Arial; }
+            form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+            form input { border: 0; padding: 10px; width: 90%; margin-right: 0.5%; }
+            form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }                                                                             
+            #messages { list-style-type: none; margin: 0; padding: 0; }
+            #messages li { padding: 5px 10px; }
+            #messages li:nth-child(odd) { background: #eee; }
+            /* .tchat {width: 30%;} */
+        </style>
+    </head>
+
+    <body>
+
+        <div class="tchat">
+            <ul id="messages"></ul>
+            <form id="form" action="">
+                <input id="input" autocomplete="off" /><button>Send</button>
+            </form>
+        </div>
+
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+
+            var socket = io();
+
+            var messages = document.getElementById("messages");
+            var form = document.getElementById("form");
+            var input = document.getElementById("input");
+
+            function addMsg(msg, color, align) {
+                var item = document.createElement("li");
+                item.textContent = msg;
+                if (color) item.style.color = color;
+                if (align) item.style.textAlign = align;
+                messages.appendChild(item);
+                window.scrollTo(0, document.body.scrollHeight);
+
+            }
+
+            form.addEventListener("submit", function(e) {
+                e.preventDefault();  // prevents page reloading
+                if (input.value) {
+                    socket.emit("chat message", input.value);
+                    addMsg(input.value, "blue", "right");
+                    input.value = "";
+                }
+            });
+
+            socket.on("hi",function(msg){
+                addMsg(msg, "green", "center");
+            });
+
+            socket.on("chat message", function(msg) {
+                addMsg(msg);
+            });
+
+            socket.on("disconnect", function(msg) {
+                addMsg(msg, "red", "center");
+            });
+
+        </script>
+    </body>
+</html>

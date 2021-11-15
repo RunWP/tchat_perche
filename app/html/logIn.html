@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <link rel="stylesheet" href="/style.css">
+    </head>
+
+    <body>
+
+        <div class="DivlogIn1">  
+            <div class="DivlogIn2">
+
+                <form method="POST" action="/checklogin">
+
+                    <input type="text" placeholder="UserName" name="username" required></input> <br><br>
+                    <input type="password" placeholder="Password" name="password" required></input> <br><br><br>
+
+                    <input type="submit" class="button" value="LOG IN"> <br><br>
+
+                </form>
+
+                <h4 id="ackText"></h4>
+
+                <a href="/signin">Signup page</a>
+
+            </div>
+        </div>  
+
+        <script>
+
+            function doAuth(hashedId) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", '/auth', true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = function() {
+                    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                        let json = JSON.parse(this.responseText);
+                        if (json.userdId) {
+                            sessionStorage.setItem("userdId", JSON.stringify(json.userdId));
+                            window.open(`/lobby/${hashedId}`, '_self');
+                        } else {window.open(`/`, '_self');}
+                    }
+                }
+                xhr.send(`hashed=${hashedId}`);  // format: "foo=bar&lorem=ipsum"
+            }
+
+            if(window.location.pathname === "/login/incorrectName") {
+                document.getElementById("ackText").innerText = "Incorrect username";
+                document.getElementById("ackText").style.color = "red";
+
+            } else if(window.location.pathname === "/login/incorrectPass") {
+                document.getElementById("ackText").innerText = "Incorrect password";
+                document.getElementById("ackText").style.color = "red";
+
+            } else {
+                let hashedId = window.location.pathname.split('/')[2];
+                if (hashedId) {doAuth(hashedId);}
+            }
+
+        </script>
+
+    </body>
+
+</html>

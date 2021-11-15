@@ -1,0 +1,45 @@
+body {
+    font-family : Helvetica, sans-serif;
+    margin: 0%;
+}
+
+.button {
+    background-color: teal;
+    color: white;
+    font-weight: bold;
+    border-radius: 3px;
+    border-color: rgb(0, 128, 128);
+    padding: 2%;
+    border-style:solid;
+    margin-left: 110px;
+   
+}
+
+a {
+ color: teal;
+}
+
+a:visited {
+    color: teal;
+
+}
+
+
+.DivlogIn1{
+    width: 80%;
+    padding: 10%;
+    background-color:white;
+
+}
+
+.DivlogIn2 {
+    background-color: white;
+    width: 30%;
+    padding: 2%;
+    text-align: center;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: rgba(0, 128, 128, 0.2) 0px 8px 24px;
+}
+
+
